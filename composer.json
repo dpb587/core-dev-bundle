@@ -1,0 +1,29 @@
+{
+    "name" : "dpb587/core-dev-bundle",
+    "description" : "Support development and describing available runtime functionality.",
+    "type" : "symfony-bundle",
+    "homepage" : "http://dpb587.github.com/core-dev-bundle/",
+    "license" : "MIT",
+    "authors" : [
+        {
+            "name" : "Danny Berger",
+            "email" : "dpb587@gmail.com",
+            "homepage" : "http://dpb587.me",
+            "role" : "Developer"
+        }
+    ],
+    "support" : {
+        "issues" : "https://github.com/dpb587/core-dev-bundle/issues",
+        "wiki" : "https://github.com/dpb587/core-dev-bundle/wiki"
+    },
+    "require" : {
+        "php" : ">=5.4",
+        "symfony/symfony" : "2.1.x-dev"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "DPB\\Bundle\\CoreDevBundle" : "src/"
+        }
+    },
+    "target-dir": "DPB/Bundle/CoreDevBundle"
+}

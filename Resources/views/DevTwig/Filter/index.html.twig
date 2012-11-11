@@ -1,0 +1,61 @@
+{% extends 'DPBCoreDevBundle:Dev/Layout:default.html.twig' %}
+
+{% block def_title filter ~ ' / Filters / TwigBundle' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h1>{{ filter }}</h1>
+
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Dev</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Bundle</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_bundle_index', { 'bundle' : 'twig' }) }}">Twig</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_devtwig_filters_index') }}">Filters</a> <span class="divider">/</span></li>
+                    <li>{{ filter }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">Overview</h3>
+            </div>
+            <div class="span10">
+                <dl class="dl-horizontal">
+                    <dt>Definition</dt>
+                    <dd><code>{% if profile.defn.class %}{{ profile.defn.class }}->{% endif %}{{ profile.defn.function }}(...)</code></dd>
+        
+                    <dt>Source</dt>
+                    <dd>
+                        {% if profile.defn.file_pkg %}
+                            <label class="label label-info">{{ profile.defn.file_pkg.package.name }}</label>
+                            <code>{{ profile.defn.file_pkg.rel_path }}</code>
+                        {% else %}
+                            <code>{{ profile.defn.file }}</code>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">Usage</h3>
+            </div>
+            <div class="span10">
+                <pre><code>{{ '{{' }} value|<strong>{{ filter }}</strong>{#
+                    #}{% if profile.args %}({#
+                        #}{% for arg in profile.args %}{#
+                            #}{% if loop.index0 %}, {% endif %}{#
+                            #}<strong>{{ arg.name }}</strong>{% if '...' != arg.name and not arg.required %} = {{ arg.default|json_encode }}{% endif %}{#
+                        #}{% endfor %}{#
+                    #}){% endif %}{#
+                #} {{ '}}' }}</code></pre>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'DPBCoreDevBundle:Layout:default.html.twig' %}
+
+{% block def_title bundle.short_name %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h1>{{ bundle.short_name }}</h1>
+
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Dev</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Bundle</a> <span class="divider">/</span></li>
+                    <li>{{ bundle.short_name }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">About</h3>
+            </div>
+            <div class="span10">
+                <dl>
+                    <dt>Class</dt>
+                    <dd>{{ bundle.class }}</dd>
+
+                    <dt>Extension</dt>
+                    <dd>
+                        {% if bundle.extension %}
+                            {{ bundle.extension.alias }}
+                        {% else %}
+                            <span class="muted">none</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt>Composer</dt>
+                    <dd>
+                        {% if bundle.composer %}
+                            <a href="{{ path('dpb_coredev_composerpackage_index', { 'package' : bundle.composer.package.name }) }}">{{ bundle.composer.package.name }}</a>
+                            ({{ bundle.composer.package.version }})
+                        {% else %}
+                            <span class="muted">unknown</span>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">Topics</h3>
+            </div>
+            <div class="span10">
+                {% include topics ~ 'topics.html.twig' ignore missing %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

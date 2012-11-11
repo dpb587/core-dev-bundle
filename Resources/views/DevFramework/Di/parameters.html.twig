@@ -1,0 +1,57 @@
+{% extends 'DPBCoreDevBundle:Dev/Layout:default.html.twig' %}
+
+{% block def_title 'Parameters / Dependency Injection / Framework' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h1>Parameters</h1>
+
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Dev</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Bundle</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_bundle_index', { 'bundle' : 'framework' }) }}">Framework</a> <span class="divider">/</span></li>
+                    <li><a href="#">Dependency Injection</a> <span class="divider">/</span></li>
+                    <li>Parameters</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <ul class="nav nav-pills">
+                    {% for key, count in jump %}
+                        <li{% if 0 == count %} class="disabled"{% endif %}><a href="#jump-{{ key }}">{{ key }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <table class="table">
+                    <tbody>
+                        {% for parameter, value in data %}
+                            <tr>
+                                <td>
+                                    <a name="jump-{{ parameter|slice(0, 1)|upper }}"></a>
+                                    <a name="{{ parameter }}"></a>
+                                    <code>{{ parameter }}</code><br />
+                                    <small style="padding-left:4px;">
+                                        <span class="muted">&rarr;</span>
+                                        <a class="muted" href="{{ path('dpb_coredev_devframework_diparameter_export', { 'parameter' : parameter, '_format' : 'json' }) }}">json</a>
+                                        <a class="muted" href="{{ path('dpb_coredev_devframework_diparameter_export', { 'parameter' : parameter, '_format' : 'php' }) }}">php</a>
+                                        <a class="muted" href="{{ path('dpb_coredev_devframework_diparameter_export', { 'parameter' : parameter, '_format' : 'xml' }) }}">xml</a>
+                                        <a class="muted" href="{{ path('dpb_coredev_devframework_diparameter_export', { 'parameter' : parameter, '_format' : 'yml' }) }}">yaml</a>
+                                    </small>
+                                </td>
+                                <td><pre><code>{{ value|yaml_encode(4) }}</code></pre></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

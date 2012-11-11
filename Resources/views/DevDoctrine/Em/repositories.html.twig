@@ -1,0 +1,28 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Bundle</th>
+            <th>Class</th>
+            <th>Database Table</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results %}
+            <tr>
+                <td>
+                    {% if result.bundle %}
+                        <a href="{{ path('dpb_coredev_bundle_index', { 'bundle' : result.bundle.slug }) }}">{{ result.bundle.name }}</a>
+                    {% else %}
+                        <span class="muted">Unknown</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('dpb_coredev_devtwig_filter_index', { 'filter' : result.class|replace({ '\\' : '-' }) }) }}">{{ result.class }}</a>
+                </td>
+                <td>
+                    <a href="{{ path('dpb_coredev_devtwig_filter_index', { 'filter' : result.table }) }}">{{ result.table }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

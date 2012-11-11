@@ -1,0 +1,30 @@
+{% extends 'DPBCoreDevBundle:Dev/Layout:default.html.twig' %}
+
+{% block def_title %}Repositories / Doctrine / Dataset{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for column in resultset.columns %}
+                        <th>{{ column.options.title }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in resultset %}
+                    <tr>
+                        {% for name, column in resultset.columns %}
+                            {% if 'class' == name %}
+                                <td><a href="{{ path('dpb_coredev_dev_datasetdoctrine_columns', { 'em' : app.request.attributes.get('em'), 'repository' : result.class|replace({'\\' : '-'}), '_format' : 'html' }) }}">{{ result.class }}</td>
+                            {% else %}
+                                <td>{{ result[column.name] }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

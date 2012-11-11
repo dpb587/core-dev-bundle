@@ -1,0 +1,52 @@
+{% extends 'DPBCoreDevBundle:Dev/Layout:default.html.twig' %}
+
+{% block def_title 'Services / Dependency Injection / Framework' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h1>Services</h1>
+
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Dev</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Bundle</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_bundle_index', { 'bundle' : 'framework' }) }}">Framework</a> <span class="divider">/</span></li>
+                    <li><a href="#">Dependency Injection</a> <span class="divider">/</span></li>
+                    <li>Services</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <ul class="nav nav-pills">
+                    {% for key, count in jump %}
+                        <li{% if 0 == count %} class="disabled"{% endif %}><a href="#jump-{{ key }}">{{ key }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <table class="table">
+                    <tbody>
+                        {% for service, data in data %}
+                            <tr>
+                                <td>
+                                    <a name="jump-{{ service|slice(0, 1)|upper }}"></a>
+                                    <a name="{{ service }}"></a>
+                                    <code><a href="{{ path('dpb_coredev_devframework_diservice_index', { 'service' : service }) }}">{{ service }}</a></code>
+                                </td>
+                                <td>
+                                    <pre><code>{{ data.class }}</code></pre>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

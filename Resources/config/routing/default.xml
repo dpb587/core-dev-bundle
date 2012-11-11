@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd"
+>
+    <route id="dpb_coredev_index_index" pattern="/">
+        <default key="_controller">DPBCoreDevBundle:Index:index</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="dpb_coredev_composerpackage_index" pattern="/composer/{package}">
+        <default key="_controller">DPBCoreDevBundle:ComposerPackage:index</default>
+        <requirement key="_method">GET</requirement>
+        <requirement key="package">[^/]+/[^/]+</requirement>
+    </route>
+
+    <route id="dpb_coredev_bundle_index" pattern="/bundle/{bundle}/index.html">
+        <default key="_controller">DPBCoreDevBundle:Bundle:index</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="dpb_coredev_bundle_configuration" pattern="/bundle/{bundle}/configuration.yml">
+        <default key="_controller">DPBCoreDevBundle:Bundle:configuration</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <!-- FrameworkBundle -->
+
+    <route id="dpb_coredev_devframework_di_parameters" pattern="/bundle/framework/dependency-injection/parameters.html">
+        <default key="_controller">DPBCoreDevBundle:DevFramework/Di:parameters</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="dpb_coredev_devframework_diparameter_export" pattern="/bundle/framework/dependency-injection/parameter/{parameter}/export.{_format}">
+        <default key="_controller">DPBCoreDevBundle:DevFramework/DiParameter:export</default>
+        <requirement key="_format">html|json|php|xml|yml</requirement>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="dpb_coredev_devframework_di_services" pattern="/bundle/framework/dependency-injection/services.html">
+        <default key="_controller">DPBCoreDevBundle:DevFramework/Di:services</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="dpb_coredev_devframework_diservice_index" pattern="/bundle/framework/dependency-injection/service/{service}/index.html">
+        <default key="_controller">DPBCoreDevBundle:DevFramework/DiService:index</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="dpb_coredev_devframework_di_tags" pattern="/bundle/framework/dependency-injection/tags.html">
+        <default key="_controller">DPBCoreDevBundle:DevFramework/Di:tags</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="dpb_coredev_devframework_ditag_index" pattern="/bundle/framework/dependency-injection/tag/{tag}/index.html">
+        <default key="_controller">DPBCoreDevBundle:DevFramework/DiTag:index</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="dpb_coredev_devframework_routing_routes" pattern="/bundle/framework/routing/routes.html">
+        <default key="_controller">DPBCoreDevBundle:DevFramework/Routing:routes</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <!-- TwigBundle -->
+
+    <route id="dpb_coredev_devtwig_filters_index" pattern="/bundle/twig/filters/index.html">
+        <default key="_controller">DPBCoreDevBundle:DevTwig/Filters:index</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="dpb_coredev_devtwig_filter_index" pattern="/bundle/twig/filter/{filter}.html">
+        <default key="_controller">DPBCoreDevBundle:DevTwig/Filter:index</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+</routes>

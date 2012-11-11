@@ -1,0 +1,46 @@
+{% extends 'DPBCoreDevBundle:Layout:default.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="page-header">
+            <h1 style="text-align:center;">An Informed Developer</h1>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <h2 style="text-align:center;">Active Bundles</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for col in 0..2 %}
+                <div class="span4">
+                    {% for bundle in bundles %}
+                        {% if col == loop.index0 % 3 %}
+                            <a href="{{ path('dpb_coredev_bundle_index', { 'bundle' : bundle.slug }) }}" style="display:block;padding:4px;text-align:center;">{{ bundle.name }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <hr />
+                <h2 style="text-align:center;">Composer Packages</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for col in 0..2 %}
+                <div class="span4">
+                    {% for package in packages %}
+                        {% if col == loop.index0 % 3 %}
+                            <a href="{{ path('dpb_coredev_composerpackage_index', { 'package' : package.name }) }}" style="display:block;padding:4px;text-align:center;">{{ package.name }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

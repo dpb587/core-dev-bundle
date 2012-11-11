@@ -1,0 +1,112 @@
+{% extends 'DPBCoreDevBundle:Dev/Layout:default.html.twig' %}
+
+{% block def_title id ~ ' / Service / Dependency Injection / Framework' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h1>{{ id }}</h1>
+
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Dev</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Bundle</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_bundle_index', { 'bundle' : 'framework' }) }}">Framework</a> <span class="divider">/</span></li>
+                    <li><a href="#">Dependency Injection</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_devframework_di_services') }}">Services</a> <span class="divider">/</span></li>
+                    <li>{{ id }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">Overview</h3>
+            </div>
+            <div class="span10">
+                <dl class="dl-horizontal">
+                    <dt>Class</dt>
+                    <dd>{{ class }}</dd>
+        
+                    <dt>Scope</dt>
+                    <dd>{{ scope|default('container') }}</dd>
+        
+                    <dt>Public</dt>
+                    <dd>{{ public|default('true') }}</dd>
+        
+                    <dt>Dependencies</dt>
+                    <dd>
+                        {% if deps_local %}
+                            {% for dep, null in deps_local %}{#
+                                #}{% if loop.index0 %}, {% endif %}
+                                <a href="{{ path('dpb_coredev_devframework_diservice_index', { 'service' : dep }) }}">{{ dep }}</a>{#
+                            #}{% endfor %}
+                        {% else %}
+                            <span class="muted">none</span>
+                        {% endif %}
+                    </dd>
+        
+                    <dt>Referenced By</dt>
+                    <dd>
+                        {% if deps_foreign %}
+                            {% for dep, null in deps_foreign %}{#
+                                #}{% if loop.index0 %}, {% endif %}
+                                <a href="{{ path('dpb_coredev_devframework_diservice_index', { 'service' : dep }) }}">{{ dep }}</a>{#
+                            #}{% endfor %}
+                        {% else %}
+                            <span class="muted">none</span>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <hr />
+        
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">Tags</h3>
+            </div>
+            <div class="span10">
+                {% if tags %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Tag</th>
+                                <th>Attributes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tag in tags %}
+                                <tr>
+                                    <td><code><a href="{{ path('dpb_coredev_devframework_ditag_index', { 'tag' : tag.name }) }}">{{ tag.name }}</a></code></td>
+                                    <td>
+                                        {% for key, value in tag.attrs %}{#
+                                            #}{% if loop.index0 %}, {% endif %}
+                                            <code>{{ key }}={{ value|json_encode }}</code>{#
+                                        #}{% else %}
+                                            <span class="muted">none</span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="muted">No tags available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">Service <small>PHP</small></h3>
+            </div>
+            <div class="span10">
+                <pre><code>{{ code_pretty|raw }}</code></pre>
+            </div>
+        </div>
+    </div>
+{% endblock %}

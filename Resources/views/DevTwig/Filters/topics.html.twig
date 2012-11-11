@@ -1,0 +1,4 @@
+{% for filter in data %}{#
+    #}{% if loop.index0 %} <strong class="muted">&middot;</strong> {% endif %}
+    <a href="{{ path('dpb_coredev_devtwig_filter_index', { 'filter' : filter }) }}">{{ filter }}</a>{#
+#}{% endfor %}

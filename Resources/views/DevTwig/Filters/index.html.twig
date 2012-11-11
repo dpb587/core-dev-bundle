@@ -1,0 +1,57 @@
+{% extends 'DPBCoreDevBundle:Dev/Layout:default.html.twig' %}
+
+{% block def_title 'Filters / TwigBundle' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h1>Filters</h1>
+
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Dev</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Bundle</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_bundle_index', { 'bundle' : 'twig' }) }}">Twig</a> <span class="divider">/</span></li>
+                    <li>Filters</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <ul class="nav nav-pills">
+                    {% for key, count in jump %}
+                        <li{% if 0 == count %} class="disabled"{% endif %}><a href="#jump-{{ key }}">{{ key }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <table class="table">
+                    <tbody>
+                        {% for filter, data in data %}
+                            <tr>
+                                <td>
+                                    <a name="jump-{{ filter|slice(0, 1)|upper }}"></a>
+                                    <a name="{{ filter }}"></a>
+                                    <code><a href="{{ path('dpb_coredev_devtwig_filter_index', { 'filter' : filter }) }}">{{ filter }}</a></code>
+                                </td>
+                                <td>
+                                    <code>value|<strong>{{ filter }}</strong>{#
+                                    #}{% if data.args %}({#
+                                        #}{% for arg in data.args %}{#
+                                            #}{% if loop.index0 %}, {% endif %}{#
+                                            #}<strong>{{ arg.name }}</strong>{% if '...' != arg.name and not arg.required %} = {{ arg.default|json_encode }}{% endif %}{#
+                                        #}{% endfor %}{#
+                                    #}){% endif %}</code>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

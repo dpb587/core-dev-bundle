@@ -1,0 +1,147 @@
+{% extends 'DPBCoreDevBundle:Layout:default.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="page-header">
+            <h1>
+                {{ package.name }}
+                <small>{{ package.version }}</small>
+            </h1>
+        </div>
+
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">Links</h3>
+            </div>
+            {% if package.homepage is defined %}
+                <div class="span3">
+                    <h4><a href="{{ package.homepage }}" style="display:block;">Homepage</a></h4>
+                    <p>Official project homepage</p>
+                </div>
+            {% endif %}
+            <div class="span3">
+                <h4><a href="https://packagist.org/search/?q={{ package.name|escape('url') }}" style="display:block;">Packagist</a></h4>
+                <p>The main Composer repository</p>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">Overview</h3>
+            </div>
+            <div class="span10">
+                <dl>
+                    <dt>Description</dt>
+                    <dd>
+                        {% if package.description is defined %}
+                            {{ package.description }}
+                        {% else %}
+                            <span class="muted">missing</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt>Authors</dt>
+                    {% for author in package.authors %}
+                        <dd>
+                            {{ author.name }}
+                            {% if author.homepage is defined or author.email is defined %}
+                                ({#
+                                #}{% if author.homepage is defined %}{#
+                                    #}<a href="{{ author.homepage }}">homepage</a>{#
+                                    #}{% if author.email is defined %}, {% endif %}{#
+                                #}{% endif %}{#
+                                #}{% if author.email is defined %}{#
+                                    #}<a href="mailto:{{ author.email }}">email</a>{#
+                                #}{% endif %}{#
+                                #})
+                            {% endif %}
+                            {% if author.role is defined %}
+                                &ndash; <span class="muted">{{ author.role }}</span>
+                            {% endif %}
+                        </dd>
+                    {% endfor %}
+
+                    <dt>Type</dt>
+                    <dd>
+                        {% if package.type is defined %}
+                            {{ package.type }}
+                        {% else %}
+                            <span class="muted">missing</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt>License</dt>
+                    <dd>
+                        {% if package.license is defined %}
+                            {% for license in package.license %}{#
+                                #}{% if loop.index0 %}, {% endif %}
+                                <a href="http://www.spdx.org/licenses/{{ license }}">{{ license }}</a>{#
+                            #}{% endfor %}
+                        {% else %}
+                            <span class="muted">missing</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt>Keywords</dt>
+                    <dd>
+                        {% if package.keywords is defined %}
+                            {% for keyword in package.keywords %}
+                                {% if loop.index0 %} <strong class="muted">&middot;</strong> {% endif %}
+                                <a href="https://packagist.org/packages/?tag={{ keyword }}">{{ keyword }}</a>{#
+                            #}{% endfor %}
+                        {% else %}
+                            <span class="muted">missing</span>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        {% if package.source is defined %}
+            <hr />
+    
+            <div class="row">
+                <div class="span2">
+                    <h3 style="font-weight:normal;margin-top:0;">Source</h3>
+                </div>
+                <div class="span10">
+                    {% set tmpnam = package.name|replace({ '/' : '-' }) ~ '-' ~ package.dist.reference|slice(0, 9) %}
+                    {% if 'git' == package.source.type %}
+                        <pre><code>git clone '{{ package.source.url }}' '{{ tmpnam }}'
+cd {{ tmpnam }}/
+git checkout '{{ package.source.reference }}'</code></pre>
+                    {% elseif 'svn' == package.source.type %}
+                        <pre><code>svn checkout '{{ package.source.url }}/{{ package.source.reference }}' '{{ tmpnam }}'
+cd '{{ tmpnam }}/'</code></pre>
+                    {% else %}
+                        <div class="alert alert-error">Unexpected package source type ({{ package.source.type }}).</div>
+                        <pre><code>{{ package.source|yaml_encode }}</code></pre>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if package.dist is defined %}
+            <hr />
+    
+            <div class="row">
+                <div class="span2">
+                    <h3 style="font-weight:normal;margin-top:0;">Download</h3>
+                </div>
+                <div class="span10">
+                    {% set tmpnam = package.name|replace({ '/' : '-' }) ~ '-' ~ package.dist.reference|slice(0, 9) %}
+                    {% if 'zip' == package.dist.type %}
+                        <pre><code>wget -O '{{ tmpnam }}.zip' '<a href="{{ package.dist.url }}">{{ package.dist.url }}</a>'
+unzip '{{ tmpnam }}.zip'
+rm '{{ tmpnam }}.zip'</code></pre>
+                    {% else %}
+                        <div class="alert alert-error">Unexpected package distribution type ({{ package.dist.type }}).</div>
+                        <pre><code>{{ package.dist|yaml_encode }}</code></pre>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

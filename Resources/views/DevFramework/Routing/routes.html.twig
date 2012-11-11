@@ -1,0 +1,69 @@
+{% extends 'DPBCoreDevBundle:Dev/Layout:default.html.twig' %}
+
+{% block def_title 'Routes / Routing / Framework' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h1>Routes</h1>
+
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Dev</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Bundle</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_bundle_index', { 'bundle' : 'framework' }) }}">Framework</a> <span class="divider">/</span></li>
+                    <li>Routing <span class="divider">/</span></li>
+                    <li>Routes</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:20px;">
+            <div class="span12">
+                {% for name, route in results %}
+                    <div class="accordion-group">
+                        <div class="accordion-heading{% if route.requirements._method is defined %} alert-{% if 'POST' == route.requirements._method %}success{% elseif 'GET' == route.requirements._method %}info{% elseif 'DELETE' == route.requirements._method %}error{% endif %}{% endif %}">
+                            <div class="accordion-toggle" data-toggle="collapse" href="#{{ name }}-detail" style="padding-left:10px;">
+                                <span class="label{% if route.requirements._method is defined %} {% if 'POST' == route.requirements._method %}label-success{% elseif 'GET' == route.requirements._method %}label-info{% elseif 'DELETE' == route.requirements._method %}label-important{% endif %}{% endif %}" style="margin-right:6px;padding-bottom:4px;padding-top:4px;text-align:center;width:60px;">{{ route.requirements._method|default('ANY') }}</span>
+                                <a name="{{ route.pattern }}">{{ route.pattern }}</a>
+                            </div>
+                        </div>
+                        <div id="{{ name }}-detail" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                {% if route.requirements %}
+                                    <h4>Requirements</h4>
+    
+                                    <table class="table">
+                                        <tbody>
+                                            {% for key, val in route.requirements %}
+                                                <tr>
+                                                    <td><code>{{ key }}</code></td>
+                                                    <td><code>{{ val }}</code></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+
+                                {% if route.defaults %}
+                                    <h4>Attributes</h4>
+    
+                                    <table class="table">
+                                        <tbody>
+                                            {% for key, val in route.defaults %}
+                                                <tr>
+                                                    <td><code>{{ key }}</code></td>
+                                                    <td><pre><code>{{ val|yaml_encode(4) }}</code></pre></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

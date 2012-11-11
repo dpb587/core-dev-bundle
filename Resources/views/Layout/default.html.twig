@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block def_title %}{% endblock %}</title>
+        <link href="{{ asset('bundles/dpbcoredev/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+        {% block def_stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+
+        <script src="{{ asset('bundles/dpbcoredev/jquery/jquery.js') }}"></script>
+        <script src="{{ asset('bundles/dpbcoredev/bootstrap/js/bootstrap.min.js') }}"></script>
+        {% block def_scripts %}{% endblock %}
+    </body>
+</html>

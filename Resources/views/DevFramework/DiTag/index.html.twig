@@ -1,0 +1,54 @@
+{% extends 'DPBCoreDevBundle:Dev/Layout:default.html.twig' %}
+
+{% block def_title tag ~ ' / Tag / Dependency Injection / Framework' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h1>{{ tag }}</h1>
+
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Dev</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_index_index') }}">Bundle</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_bundle_index', { 'bundle' : 'framework' }) }}">Framework</a> <span class="divider">/</span></li>
+                    <li><a href="#">Dependency Injection</a> <span class="divider">/</span></li>
+                    <li><a href="{{ path('dpb_coredev_devframework_di_tags') }}">Tag</a> <span class="divider">/</span></li>
+                    <li>{{ tag }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span2">
+                <h3 style="font-weight:normal;margin-top:0;">Services</h3>
+            </div>
+            <div class="span10">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Attributes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in data %}
+                            <tr>
+                                <td><code><a href="{{ path('dpb_coredev_devframework_diservice_index', { 'service' : tag.service }) }}">{{ tag.service }}</a></code></td>
+                                <td>
+                                    {% if tag.attrs %}
+                                        {% for key, value in tag.attrs %}{#
+                                            #}{% if loop.index0 %}, {% endif %}
+                                            <code>{{ key }}={{ value|json_encode }}</code>{#
+                                        #}{% endfor %}
+                                    {% else %}
+                                        <span class="muted">none</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

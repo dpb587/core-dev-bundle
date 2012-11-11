@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <parameters>
+        <parameter key="dpb.core_dev.bundle_utility.class">DPB\Bundle\CoreDevBundle\Utility\BundleUtility</parameter>
+        <parameter key="dpb.core_dev.composer_install_path">%kernel.root_dir%/../vendor</parameter>
+        <parameter key="dpb.core_dev.composer_utility.class">DPB\Bundle\CoreDevBundle\Utility\ComposerUtility</parameter>
+    </parameters>
+
+    <services>
+        <service id="dpb.core_dev.bundle_utility" class="%dpb.core_dev.bundle_utility.class%">
+            <argument>%kernel.bundles%</argument>
+        </service>
+
+        <service id="dpb.core_dev.composer_utility" class="%dpb.core_dev.composer_utility.class%">
+            <argument>%dpb.core_dev.composer_install_path%</argument>
+        </service>
+    </services>
+</container>
